@@ -6,9 +6,19 @@ import requests
 class handler(BaseHTTPRequestHandler):
 
     def get_country(self):
+        url_path = self.path
+        url_components = parse.urlsplit(url_path)
+        query_string_list = parse.parse_qsl(url_components.query)
+        dic = dict(query_string_list)
+
+        url = 'https://restcountries.com/v3.1/all'
+        r = requests.get(url + dic['country'])
+
+        info = r.json()
+        message = f"The country is {info['country']}"
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
-        r = requests.get('https://restcountries.com/v3.1/name/peru')
-        print(r.text, 'This is the print on line 13')
+
+        self.wfile.write(message.encode())
         return
