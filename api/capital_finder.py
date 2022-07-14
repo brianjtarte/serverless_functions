@@ -5,7 +5,7 @@ import requests
 
 class handler(BaseHTTPRequestHandler):
 
-    def get_country(self):
+    def do_GET(self):
         url_path = self.path
         url_components = parse.urlsplit(url_path)
         query_string_list = parse.parse_qsl(url_components.query)
