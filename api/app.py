@@ -15,13 +15,13 @@ class handler(BaseHTTPRequestHandler):
 
         if 'name' in dic:
             r = requests.get(url + dic['name'])
-
-            print(r)
+            capital = ""
 
             info = r.json()
-            # message = f"The country is {info['name'][0]}"
-            print(info)
-            message = 'this is the return page'
+            for cap in info:
+                country_capital = cap['capital'][0]
+                capital += country_capital
+            message = f"The capital of {dic['name']} is {capital}"
         else:
             message = 'Please give us a country'
         self.send_response(200)
