@@ -11,15 +11,19 @@ class handler(BaseHTTPRequestHandler):
         query_string_list = parse.parse_qsl(url_components.query)
         dic = dict(query_string_list)
         print(dic)
-        url = 'https://restcountries.com/v3.1/name'
+        url = 'https://restcountries.com/v3.1/name/'
 
-        r = requests.get(url + dic['name'])
-        print(r)
+        if 'name' in dic:
+            r = requests.get(url + dic['name'])
 
-        info = r.json()
-        # message = f"The country is {info['name'][0]}"
-        print(info)
-        message = 'this is the return page'
+            print(r)
+
+            info = r.json()
+            # message = f"The country is {info['name'][0]}"
+            print(info)
+            message = 'this is the return page'
+        else:
+            message = 'Please give us a country'
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
